@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: tech-blog-archive
+  profiles:
+    active: dev  # 기본 활성 프로파일 (개발 환경)
+  
+  # JPA 공통 설정
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # 플라이웨이 공통 설정
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  
+  # 캐싱 공통 설정
+  cache:
+    type: redis
+
+# 서버 공통 설정
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+    min-response-size: 1024
+
+# 로깅 공통 설정
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 액추에이터 공통 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
