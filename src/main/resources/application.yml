@@ -7,9 +7,6 @@ spring:
   # JPA 공통 설정
   jpa:
     open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
 
   # 플라이웨이 공통 설정
   flyway:
@@ -20,6 +17,9 @@ spring:
   # 캐싱 공통 설정
   cache:
     type: redis
+  devtools:
+    livereload:
+      enabled: false
 
 # 서버 공통 설정
 server:
@@ -33,6 +33,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
 
 # 액추에이터 공통 설정
 management:

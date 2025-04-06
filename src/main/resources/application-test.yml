@@ -13,7 +13,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        show_sql: true
 
   # 테스트 환경에서는 Redis 비활성화
   data:

@@ -56,6 +56,93 @@ docker-compose up -d
 ./gradlew bootRun
 ```
 
+## API 사용법
+
+### 크롤링 설정 관리 API
+
+#### 블로그 소스 목록 조회
+```
+GET /api/crawler/sources
+```
+
+#### 활성화된 블로그 소스만 조회
+```
+GET /api/crawler/sources/active
+```
+
+#### 새로운 블로그 소스 추가
+```
+POST /api/crawler/sources
+Content-Type: application/json
+
+{
+  "name": "블로그 이름",
+  "url": "https://example.com/blog",
+  "useRss": true,
+  "feedUrl": "https://example.com/rss"
+}
+```
+
+RSS가 없는 경우 HTML 크롤링을 위한 셀렉터:
+```json
+{
+  "name": "블로그 이름",
+  "url": "https://example.com/blog",
+  "useRss": false,
+  "postSelector": ".post-item",
+  "titleSelector": ".post-title",
+  "contentSelector": ".post-content",
+  "linkSelector": ".post-title a",
+  "dateSelector": ".post-date",
+  "dateFormat": "yyyy-MM-dd"
+}
+```
+
+#### 블로그 소스 수정
+```
+PUT /api/crawler/sources/{id}
+Content-Type: application/json
+
+{
+  "name": "수정된 블로그 이름",
+  "url": "https://example.com/blog",
+  "useRss": true,
+  "feedUrl": "https://example.com/feed"
+}
+```
+
+#### 블로그 소스 활성화/비활성화
+```
+PATCH /api/crawler/sources/{id}/active?active=true
+```
+
+#### 블로그 소스 삭제
+```
+DELETE /api/crawler/sources/{id}
+```
+
+### 크롤링 테스트 API
+
+#### HTML 크롤링 테스트
+```
+GET /api/crawler/test-selectors?url=https://example.com&postSelector=.post-item&titleSelector=.post-title&contentSelector=.post-content&linkSelector=.post-title+a&dateSelector=.post-date&limit=3
+```
+
+#### RSS 피드 테스트
+```
+GET /api/crawler/test-rss?feedUrl=https://example.com/feed&limit=5
+```
+
+#### RSS 피드 유효성 확인
+```
+GET /api/crawler/validate-rss?feedUrl=https://example.com/feed
+```
+
+#### HTML 가져오기
+```
+GET /api/crawler/fetch-html?url=https://example.com
+```
+
 ## 라이센스
 
 MIT License
