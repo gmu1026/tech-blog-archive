@@ -61,27 +61,7 @@ public class BlogPostService {
     }
 
     @Transactional(readOnly = true)
-    public Slice<BlogPostDto> getAllBlogPosts(Pageable pageable) {
-        Slice<BlogPost> posts = blogPostRepository.findAllBy(pageable);
-
-        return posts.map(this::convertToDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Slice<BlogPostDto> getBlogPostsForQuery(Pageable pageable, String query) {
-        Slice<BlogPost> posts = blogPostRepository.findAllByTitleContaining(query);
-        return posts.map(this::convertToDto);
-    }
-
-
-    private BlogPostDto convertToDto(BlogPost blogPost) {
-        return BlogPostDto.builder()
-                .id(blogPost.getId())
-                .title(blogPost.getTitle())
-                .link(blogPost.getLink())
-                .content(blogPost.getContent())
-                .publishedAt(blogPost.getPublishedAt())
-                .blogSourceName(blogPost.getBlogSource().getName())
-                .build();
+    public Slice<BlogPostDto> getBlogPosts(String query, String source, Boolean isRecentOnly, Pageable pageable) {
+        return blogPostRepository.findBySearchCriteria(query, source, isRecentOnly, pageable);
     }
 }
