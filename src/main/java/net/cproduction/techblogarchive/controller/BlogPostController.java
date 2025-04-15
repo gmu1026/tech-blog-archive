@@ -18,13 +18,9 @@ public class BlogPostController {
     private final BlogPostService blogPostService;
 
     @GetMapping
-    public ResponseEntity<?> getAllBlogPost(Pageable pageable, @RequestParam(required = false) String query) {
-        if (query != null) {
-            log.info("Searching for blog posts with query {}", query);
-            return ResponseEntity.ok(blogPostService.getBlogPostsForQuery(pageable, query));
-        } else {
-            log.info("Received request to get all blog posts");
-            return ResponseEntity.ok(blogPostService.getAllBlogPosts(pageable));
-        }
+    public ResponseEntity<?> getAllBlogPost(Pageable pageable, @RequestParam(required = false) String query,
+                                            @RequestParam(required = false) String source,
+                                            @RequestParam(required = false) Boolean date) {
+        return ResponseEntity.ok(blogPostService.getBlogPosts(query, source, date, pageable));
     }
 }
